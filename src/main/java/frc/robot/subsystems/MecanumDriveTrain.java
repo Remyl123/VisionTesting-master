@@ -46,19 +46,26 @@ public class MecanumDriveTrain extends Subsystem {
   }
   
   public void driveWithJoystick() {
-    double forward = OI.joystick.getY() * 0.5; // don't go too fast! multiply by 0.2. forward = speed
-    double turn = OI.joystick.getZ() * 0.5;
-    double x = OI.joystick.getX() * 0.5;
+    double forward = OI.joystick.getY() * 0.7; // don't go too fast! multiply by 0.2. forward = speed
+    double turn = -OI.joystick.getZ() * 0.7;
+    double x = -OI.joystick.getX() * 0.7;
 
+    double mag = OI.joystick.getMagnitude() * .5;
+    double dir = OI.joystick.getDirectionDegrees() * .5;
+    double rot = OI.joystick.getZ() * .5;
     if(Math.abs(forward) < 0.20) forward = 0;
 
     if(Math.abs(turn) < .20) turn = 0; 
 
-    if (Math.abs(x) < .20) turn = 0; 
+    if (Math.abs(x) < .20) x = 0; 
 
-    SmartDashboard.putNumber("Joystick Y:", forward);
-    SmartDashboard.putNumber("Joystick Z:", turn);
-    SmartDashboard.putNumber("Joystick X:", x);
+    SmartDashboard.putNumber("Joystick mag:", mag);
+    SmartDashboard.putNumber("Joystick dir:", dir);
+    SmartDashboard.putNumber("Joystick rot:", rot);
+
+    SmartDashboard.putNumber("Joystick x:", x);
+    SmartDashboard.putNumber("Joystick y:", forward);
+    SmartDashboard.putNumber("Joystick z:", turn);
 
     SmartDashboard.putNumber("Front Left Motor:", frontRight.get());
     //SmartDashboard.putNumber("Middle Left Motor:", RobotMap.middleLeft.get());
@@ -70,32 +77,40 @@ public class MecanumDriveTrain extends Subsystem {
 
 
     mecDrive.driveCartesian(x, forward, turn);
+    //mecDrive.drivePolar(mag, dir, rot);
+
+  
   }
 
 
   public void forward(){
-    frontLeft.set(.5);
-    rearLeft.set(.5);
-    frontRight.set(.5);
-    rearRight.set(.5);
-
+    mecDrive.driveCartesian(0, -.4, 0);
 
   }
 
   public void stop(){
-    frontLeft.set(0);
-    rearLeft.set(0);
-    frontRight.set(0);
-    rearRight.set(0);
+    mecDrive.driveCartesian(0, 0, 0);
+
   }
     
   public void left(){
-    mecDrive.driveCartesian(-0.2, 0, 0);
+    mecDrive.driveCartesian(0.4, 0, 0);
   }
 
   public void right(){
-    mecDrive.driveCartesian(0.2, 0, 0);
+    mecDrive.driveCartesian(-0.4, 0, 0);
+
+    
+  }public void turnRight(){
+    mecDrive.driveCartesian(0, 0, -.3);
 
     
   }
+  
+  public void turnLeft(){
+    mecDrive.driveCartesian(0, 0, .3);
+
+    
+  }
+  
 }

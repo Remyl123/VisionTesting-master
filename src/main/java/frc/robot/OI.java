@@ -10,8 +10,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Blink;
+import frc.robot.commands.Left;
+import frc.robot.commands.LineUp;
 import frc.robot.commands.MoveToTarget;
 import frc.robot.commands.Off;
+import frc.robot.commands.Right;
+import frc.robot.commands.Stop;
 
 
 /**
@@ -23,10 +27,15 @@ public class OI {
   public static Joystick joystick = new Joystick(0);
   
   Button button1 = new JoystickButton(joystick,3);
-  Button button2 = new JoystickButton(joystick,1);
+  Button button2 = new JoystickButton(joystick,4);
+  Button button3 = new JoystickButton(joystick,1);
   public OI(){
     button1.whenPressed(new MoveToTarget());
-    button2.whenPressed(new Off());
+    //button2.whenPressed(new Off());
+
+    //button1.whenPressed(new Left());
+    button2.whenPressed(new LineUp());
+    button3.whenPressed(new Stop());
   }
   
 

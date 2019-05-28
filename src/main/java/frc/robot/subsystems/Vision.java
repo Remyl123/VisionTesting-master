@@ -42,12 +42,14 @@ public class Vision extends Subsystem {
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
-  
+    NetworkTableEntry ts = table.getEntry("ts");
+
 
     //read values periodically
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double targetArea = ta.getDouble(0.0);
+    double skew = ts.getDouble(0.0);
 
     //double x = tx.getNumber("tx",0)
     //double y = tx.getNumber("ty",0)
@@ -57,7 +59,8 @@ public class Vision extends Subsystem {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("Target Area", targetArea);
-
+    SmartDashboard.putNumber("Skew", skew);
+    
   }
 
   public double getArea(){

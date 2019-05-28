@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class MoveToTarget extends Command {
-  public MoveToTarget() {
+public class LineUp extends Command {
+  public LineUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.vision);
@@ -21,27 +21,23 @@ public class MoveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.vision.blink();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.vision.display();
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    double offset = Robot.vision.getXOffset();
-    if (offset < -1.5){
-      Robot.mecanumDrive.left();
-    } else if(offset > 1.5){
-      Robot.mecanumDrive.right();
-    }else if(Robot.vision.getArea() < 10){
-      Robot.mecanumDrive.forward();
-    }else{
+    double skew = Robot.vision.getSkew();
+    if(skew < -1.5){
+      Robot.mecanumDrive.turnLeft();
+    }else if(skew < 1.5){
+      Robot.mecanumDrive.turnRight();
+    } else{
       Robot.mecanumDrive.stop();
       return true;
     }
@@ -51,16 +47,11 @@ public class MoveToTarget extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.mecanumDrive.stop();
-    Robot.vision.close();
-
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.mecanumDrive.stop();
-    Robot.vision.close();
   }
 }
