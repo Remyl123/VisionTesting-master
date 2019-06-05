@@ -7,9 +7,15 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
@@ -36,6 +42,19 @@ public class Robot extends TimedRobot {
   public static MecanumDriveTrain mecanumDrive = new MecanumDriveTrain();
   //public static Motor motor = new Motor();
   //public static TankDrive tankDrive = new TankDrive();
+
+  private boolean m_LimelightHasValidTarget = false;
+  private double m_LimelightDriveCommand = 0.0;
+  private double m_LimelightSteerCommand = 0.0;
+
+  public WPI_TalonSRX frontLeft = new WPI_TalonSRX(1);
+  public WPI_TalonSRX rearLeft = new WPI_TalonSRX(6);
+  public WPI_TalonSRX frontRight = new WPI_TalonSRX(2);
+  public WPI_TalonSRX rearRight = new WPI_TalonSRX(4);
+  //private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(RobotMap.topLeft,RobotMap.rearLeft);
+  //private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(RobotMap.topRight,RobotMap.rearRight);
+  private MecanumDrive m_Drive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+
 
   Command m_autonomousCommand = new Autonomous();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -132,6 +151,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    Update_Limelight_Tracking();
+    if (m_LimelightHasValidTarget)
+    {
+          m_Drive.driveCartesian(0,m_LimelightDriveCommand,-m_LimelightSteerCommand);
+    }
+
   }
 
   /**
@@ -139,5 +164,47 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public void Update_Limelight_Tracking()
+  {
+        // These numbers must be tuned for your Robot!  Be careful!
+        final double STEER_K = 0.005;                    // how hard to turn toward the target
+        final double DRIVE_K = 0.1;                    // how hard to drive fwd toward the target
+        final double DESIRED_TARGET_AREA = 14.0;        // Area of the target when the robot reaches the wall
+        final double MAX_DRIVE = 0.5;                   // Simple speed limit so we don't drive too fast
+
+        double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
+        double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+        double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
+        
+        final String isGreat = "Edna";
+        
+        SmartDashboard.putBoolean("hasTarget", m_LimelightHasValidTarget);
+        tx -= 10;
+        if (tv < 1.0)
+        {
+          m_LimelightHasValidTarget = false;
+          m_LimelightDriveCommand = 0.0;
+          m_LimelightSteerCommand = 0.0;
+          return;
+        }
+
+        m_LimelightHasValidTarget = true;
+
+        // Start with proportional steering
+        double steer_cmd = tx * STEER_K;
+        m_LimelightSteerCommand = steer_cmd;
+
+        // try to drive forward until the target area reaches our desired area
+        double drive_cmd = (DESIRED_TARGET_AREA - ta) * DRIVE_K;
+
+        // don't let the robot drive too fast into the goal
+        if (drive_cmd > MAX_DRIVE)
+        {
+          drive_cmd = MAX_DRIVE;
+        }
+        m_LimelightDriveCommand = -drive_cmd;
   }
 }
