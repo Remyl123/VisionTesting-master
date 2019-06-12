@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -150,12 +151,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
-    Update_Limelight_Tracking();
-    if (m_LimelightHasValidTarget)
-    {
-          m_Drive.driveCartesian(0,m_LimelightDriveCommand,-m_LimelightSteerCommand);
-    }
+  boolean start_auto = OI.joystick.getRawButton(2);
+    //if (start_auto) {
+      Scheduler.getInstance().run();
+      //Update_Limelight_Tracking();
+      if (m_LimelightHasValidTarget)
+      {
+            m_Drive.driveCartesian(0,m_LimelightDriveCommand,-m_LimelightSteerCommand);
+      }
+    //}
 
   }
 
@@ -164,8 +168,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  
   }
-
+  
   public void Update_Limelight_Tracking()
   {
         // These numbers must be tuned for your Robot!  Be careful!
@@ -179,7 +184,7 @@ public class Robot extends TimedRobot {
         double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
         double ta = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ta").getDouble(0);
         
-        final String isGreat = "Edna";
+        
         
         SmartDashboard.putBoolean("hasTarget", m_LimelightHasValidTarget);
         tx -= 10;

@@ -29,6 +29,8 @@ public class OI {
   Button button1 = new JoystickButton(joystick,3);
   Button button2 = new JoystickButton(joystick,4);
   Button button3 = new JoystickButton(joystick,1);
+  Button button4 = new JoystickButton(joystick,2);
+  
   public OI(){
     button1.whenPressed(new MoveToTarget());
     //button2.whenPressed(new Off());

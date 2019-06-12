@@ -84,6 +84,7 @@ public class Vision extends Subsystem {
 
     return ts.getDouble(0);
 
+
   }
   /*
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");

@@ -21,12 +21,12 @@ public class MoveToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.vision.blink();
+    Robot.vision.stopBlinking();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
+  protected void execute() {  
     Robot.vision.display();
     
   }
