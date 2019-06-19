@@ -14,7 +14,7 @@ public class Align extends Command {
   public Align() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);\
-    requires(Robot.vision);
+    //requires(Robot.vision);
     //requires(Robot.tankDrive);
   }
 
@@ -32,6 +32,7 @@ public class Align extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() { //write comments!
+    /*
     if(Robot.vision.getSkew() > .5){
       //Robot.tankDrive.turn(true);
       return true;
@@ -39,6 +40,7 @@ public class Align extends Command {
       //Robot.tankDrive.turn(false);
       return true;
     }
+    */
     return false;
   }
 

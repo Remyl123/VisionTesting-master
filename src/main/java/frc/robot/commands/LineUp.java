@@ -14,7 +14,7 @@ public class LineUp extends Command {
   public LineUp() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.vision);
+    //requires(Robot.vision);
     requires(Robot.mecanumDrive);
   }
 
@@ -26,12 +26,12 @@ public class LineUp extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.vision.display();
+    //Robot.vision.display();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
-  protected boolean isFinished() {
+  protected boolean isFinished() {/*
     double skew = Robot.vision.getSkew();
     if(skew < -1.5){
       Robot.mecanumDrive.turnLeft();
@@ -41,6 +41,7 @@ public class LineUp extends Command {
       Robot.mecanumDrive.stop();
       return true;
     }
+    */
     return false;
   }
 

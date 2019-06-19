@@ -14,26 +14,27 @@ public class MoveToTarget extends Command {
   public MoveToTarget() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.vision);
+    //requires(Robot.vision);
     requires(Robot.mecanumDrive);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.vision.stopBlinking();
+    //Robot.vision.stopBlinking();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {  
-    Robot.vision.display();
+    //Robot.vision.display();
     
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    /*
     double offset = Robot.vision.getXOffset();
     if (offset < -1.5){
       Robot.mecanumDrive.left();
@@ -45,14 +46,17 @@ public class MoveToTarget extends Command {
       Robot.mecanumDrive.stop();
       return true;
     }
+    */
     return false;
+    
+
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.mecanumDrive.stop();
-    Robot.vision.close();
+    //Robot.vision.close();
 
   }
 
@@ -61,6 +65,6 @@ public class MoveToTarget extends Command {
   @Override
   protected void interrupted() {
     Robot.mecanumDrive.stop();
-    Robot.vision.close();
+    //Robot.vision.close();
   }
 }

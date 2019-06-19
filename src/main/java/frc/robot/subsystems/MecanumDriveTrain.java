@@ -30,7 +30,7 @@ public class MecanumDriveTrain extends Subsystem {
   public WPI_TalonSRX rearLeft = new WPI_TalonSRX(6);
   public WPI_TalonSRX frontRight = new WPI_TalonSRX(2);
   public WPI_TalonSRX rearRight = new WPI_TalonSRX(4);
-  MecanumDrive mecDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+  public MecanumDrive mecDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
   @Override
   public void initDefaultCommand() {
@@ -53,15 +53,21 @@ public class MecanumDriveTrain extends Subsystem {
     double mag = OI.joystick.getMagnitude() * .5;
     double dir = OI.joystick.getDirectionDegrees() * .5;
     double rot = OI.joystick.getZ() * .5;
-    if(Math.abs(forward) < 0.20) forward = 0;
+    if(Math.abs(forward) < 0.20){
+      forward = 0;
+    }
 
-    if(Math.abs(turn) < .20) turn = 0; 
+    if(Math.abs(turn) < .20){
+      turn = 0;
+    } 
 
-    if (Math.abs(x) < .20) x = 0; 
+    if (Math.abs(x) < .20){
+      x = 0;
+    } 
 
-    SmartDashboard.putNumber("Joystick mag:", mag);
-    SmartDashboard.putNumber("Joystick dir:", dir);
-    SmartDashboard.putNumber("Joystick rot:", rot);
+    //SmartDashboard.putNumber("Joystick mag:", mag);
+    //SmartDashboard.putNumber("Joystick dir:", dir);
+    //SmartDashboard.putNumber("Joystick rot:", rot);
 
     SmartDashboard.putNumber("Joystick x:", x);
     SmartDashboard.putNumber("Joystick y:", forward);

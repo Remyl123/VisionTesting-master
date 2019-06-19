@@ -9,11 +9,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.Blink;
+//import frc.robot.commands.Blink;
 import frc.robot.commands.Left;
 import frc.robot.commands.LineUp;
 import frc.robot.commands.MoveToTarget;
-import frc.robot.commands.Off;
+//import frc.robot.commands.Off;
 import frc.robot.commands.Right;
 import frc.robot.commands.Stop;
 
@@ -32,11 +32,11 @@ public class OI {
   Button button4 = new JoystickButton(joystick,2);
   
   public OI(){
-    button1.whenPressed(new MoveToTarget());
+    //button1.whenPressed(new MoveToTarget());
     //button2.whenPressed(new Off());
 
     //button1.whenPressed(new Left());
-    button2.whenPressed(new LineUp());
+    //button2.whenPressed(new LineUp());
     button3.whenPressed(new Stop());
   }
   

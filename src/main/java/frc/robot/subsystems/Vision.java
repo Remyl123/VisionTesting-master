@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.robot.commands.Display;
+//import frc.robot.commands.Display;
 
 /**
  * Add your docs here.
@@ -23,7 +23,7 @@ public class Vision extends Subsystem {
   NetworkTable table1 = NetworkTableInstance.getDefault().getTable("limelight");
  
   public void initDefaultCommand() {
-    setDefaultCommand(new Display());
+    //setDefaultCommand(new Display());
   }
   public void blink(){
 

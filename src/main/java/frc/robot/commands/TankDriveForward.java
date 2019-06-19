@@ -15,7 +15,7 @@ public class TankDriveForward extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     //requires(Robot.tankDrive);
-    requires(Robot.vision);
+    //requires(Robot.vision);
   }
 
   // Called just before this Command runs the first time
@@ -32,9 +32,9 @@ public class TankDriveForward extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(Robot.vision.getArea() > 70){
-      return false;
-    }
+    //if(Robot.vision.getArea() > 70){
+      //return false;
+    //}
     return true;
   }
 

@@ -39,7 +39,7 @@ import frc.robot.subsystems.TankDrive;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
-  public static Vision vision = new Vision();
+  //public static Vision vision;// = new Vision();
   public static MecanumDriveTrain mecanumDrive = new MecanumDriveTrain();
   //public static Motor motor = new Motor();
   //public static TankDrive tankDrive = new TankDrive();
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
   public WPI_TalonSRX rearRight = new WPI_TalonSRX(4);
   //private SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(RobotMap.topLeft,RobotMap.rearLeft);
   //private SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(RobotMap.topRight,RobotMap.rearRight);
-  private MecanumDrive m_Drive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+  //private MecanumDrive m_Drive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
 
   Command m_autonomousCommand = new Autonomous();
@@ -151,15 +151,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-  boolean start_auto = OI.joystick.getRawButton(2);
-    //if (start_auto) {
-      Scheduler.getInstance().run();
-      //Update_Limelight_Tracking();
+    Scheduler.getInstance().run();
+    boolean start_auto = OI.joystick.getRawButton(2);
+    if (start_auto) {
+      
+      Update_Limelight_Tracking();
       if (m_LimelightHasValidTarget)
       {
-            m_Drive.driveCartesian(0,m_LimelightDriveCommand,-m_LimelightSteerCommand);
+        mecanumDrive.mecDrive.driveCartesian(0,m_LimelightDriveCommand,-m_LimelightSteerCommand);
       }
-    //}
+    }
 
   }
 
@@ -175,9 +176,9 @@ public class Robot extends TimedRobot {
   {
         // These numbers must be tuned for your Robot!  Be careful!
         final double STEER_K = 0.005;                    // how hard to turn toward the target
-        final double DRIVE_K = 0.1;                    // how hard to drive fwd toward the target
-        final double DESIRED_TARGET_AREA = 14.0;        // Area of the target when the robot reaches the wall
-        final double MAX_DRIVE = 0.5;                   // Simple speed limit so we don't drive too fast
+        final double DRIVE_K = 0.05;                    // how hard to drive fwd toward the target
+        final double DESIRED_TARGET_AREA = 15.0;        // Area of the target when the robot reaches the wall
+        final double MAX_DRIVE = 0.2;                   // Simple speed limit so we don't drive too fast
 
         double tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
         double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);

@@ -15,7 +15,7 @@ public class Move extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.mecanumDrive);
-    requires(Robot.vision);
+    //requires(Robot.vision);
   }
 
   // Called just before this Command runs the first time
@@ -26,11 +26,11 @@ public class Move extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.vision.getArea() > 20){
+    //if(Robot.vision.getArea() > 20){
       //Robot.motor.stop();
-    }else{
+    //}else{
       //Robot.motor.drive();
-    }
+    //}
     
   }
 
